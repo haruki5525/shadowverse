@@ -1,0 +1,22 @@
+{
+  "name": "シャドウバース 戦績トラッカー",
+  "short_name": "SV戦績",
+  "description": "シャドウバースのデッキ別・クラス別勝率を記録・管理するアプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f4f0",
+  "theme_color": "#1D9E75",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

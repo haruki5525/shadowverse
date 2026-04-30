@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>シャドウバース 戦績トラッカー</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1D9E75">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SV戦績">
+<style>
+  :root {
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-mid: #5DCAA5;
+    --green-dark: #0F6E56;
+    --red: #D85A30;
+    --red-light: #FAECE7;
+    --red-mid: #F0997B;
+    --red-dark: #993C1D;
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.1);
+    --border2: rgba(0,0,0,0.18);
+    --text: #1a1a18;
+    --text2: #6b6b67;
+    --text3: #9b9b97;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #181816;
+      --surface: #242422;
+      --surface2: #2e2e2b;
+      --border: rgba(255,255,255,0.1);
+      --border2: rgba(255,255,255,0.18);
+      --text: #f0efe9;
+      --text2: #9b9b97;
+      --text3: #6b6b67;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+  header {
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+    padding: 1rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #1D9E75, #0F6E56);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .header-title { font-size: 16px; font-weight: 600; }
+  .header-sub { font-size: 12px; color: var(--text2); margin-top: 1px; }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+  .overall-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  .metric {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.875rem 1rem;
+    text-align: center;
+  }
+  .metric-val { font-size: 24px; font-weight: 600; }
+  .metric-lbl { font-size: 11px; color: var(--text2); margin-top: 3px; }
+  .section-label {
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 1.5rem;
+  }
+  .add-row { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+  input[type="text"] {
+    flex: 1;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 0 14px;
+    height: 40px;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: inherit;
+  }
+  input[type="text"]:focus { border-color: var(--green-mid); }
+  input[type="text"]::placeholder { color: var(--text3); }
+  select {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 0 28px 0 10px;
+    height: 38px;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239b9b97' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    font-family: inherit;
+  }
+  button.primary {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0 18px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  button.primary:hover { background: var(--green-dark); }
+  button.primary:active { transform: scale(0.98); }
+  .deck-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+  }
+  .deck-header {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .deck-name { font-weight: 600; font-size: 15px; }
+  .btn-del {
+    background: none; border: none;
+    color: var(--text3); font-size: 16px;
+    cursor: pointer; padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    line-height: 1;
+    transition: color 0.15s, background 0.15s;
+    font-family: inherit;
+  }
+  .btn-del:hover { background: var(--red-light); color: var(--red); }
+  .deck-nums { display: flex; gap: 20px; align-items: center; margin-bottom: 8px; }
+  .stat-num { font-size: 22px; font-weight: 600; }
+  .stat-lbl { font-size: 11px; color: var(--text2); }
+  .win-bar-wrap {
+    height: 6px; background: var(--surface2);
+    border-radius: 999px; overflow: hidden; margin-bottom: 12px;
+  }
+  .win-bar {
+    height: 100%; border-radius: 999px; background: var(--green);
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .record-area {
+    display: flex; gap: 8px; align-items: center;
+    padding-top: 12px; border-top: 0.5px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .record-label { font-size: 12px; color: var(--text2); white-space: nowrap; }
+  .btn-win {
+    background: var(--green-light); color: var(--green-dark);
+    border: 0.5px solid var(--green-mid);
+    border-radius: var(--radius-sm);
+    padding: 7px 16px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s; font-family: inherit;
+  }
+  .btn-win:hover { background: #9FE1CB; }
+  .btn-win:active { transform: scale(0.97); }
+  .btn-loss {
+    background: var(--red-light); color: var(--red-dark);
+    border: 0.5px solid var(--red-mid);
+    border-radius: var(--radius-sm);
+    padding: 7px 16px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s; font-family: inherit;
+  }
+  .btn-loss:hover { background: #F5C4B3; }
+  .btn-loss:active { transform: scale(0.97); }
+  .tabs {
+    display: flex; margin-top: 12px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .tab {
+    background: none; border: none;
+    font-size: 13px; color: var(--text2);
+    cursor: pointer; padding: 7px 14px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -0.5px;
+    transition: color 0.15s; font-family: inherit;
+  }
+  .tab.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+  .tab-content { padding-top: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; color: var(--text2); font-weight: 400;
+    padding: 4px 6px 6px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 11px; letter-spacing: 0.04em;
+  }
+  th:not(:first-child) { text-align: center; }
+  td { padding: 6px 6px 6px 0; border-bottom: 0.5px solid var(--border); }
+  td:not(:first-child) { text-align: center; }
+  tr:last-child td { border-bottom: none; }
+  .mini-bar-wrap {
+    width: 44px; height: 5px; background: var(--surface2);
+    border-radius: 999px; overflow: hidden;
+    display: inline-block; vertical-align: middle;
+  }
+  .mini-bar { height: 100%; border-radius: 999px; background: var(--green); }
+  .rate-cell { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .rate-val { font-weight: 600; min-width: 32px; text-align: right; font-size: 13px; }
+  .badge {
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px; display: inline-block;
+  }
+  .badge-win { background: var(--green-light); color: var(--green-dark); }
+  .badge-loss { background: var(--red-light); color: var(--red-dark); }
+  .hist-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0; border-bottom: 0.5px solid var(--border);
+    font-size: 13px; color: var(--text2);
+  }
+  .hist-item:last-child { border-bottom: none; }
+  .hist-time { margin-left: auto; font-size: 11px; color: var(--text3); white-space: nowrap; }
+  .empty-state {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--text2); font-size: 14px;
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 1rem; }
+  .no-data { font-size: 13px; color: var(--text2); padding: 8px 0; }
+  .install-banner {
+    background: var(--green-light);
+    border: 0.5px solid var(--green-mid);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--green-dark);
+  }
+  .install-banner button {
+    background: var(--green); color: white;
+    border: none; border-radius: 6px;
+    padding: 5px 12px; font-size: 12px; font-weight: 600;
+    cursor: pointer; white-space: nowrap; margin-left: auto;
+    font-family: inherit;
+  }
+  @media (max-width: 480px) {
+    .record-area { gap: 6px; }
+    .btn-win, .btn-loss { padding: 7px 12px; }
+    .deck-nums { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">⚔️</div>
+    <div>
+      <div class="header-title">シャドウバース 戦績トラッカー</div>
+      <div class="header-sub">デッキ別・クラス別の勝率を管理</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="installBanner" style="display:none" class="install-banner">
+    <span>📱 ホーム画面に追加してアプリとして使えます</span>
+    <button id="installBtn">追加する</button>
+  </div>
+
+  <div class="overall-stats">
+    <div class="metric">
+      <div class="metric-val" id="totalGames">0</div>
+      <div class="metric-lbl">総試合数</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val" style="color:var(--green)" id="totalWins">0</div>
+      <div class="metric-lbl">総勝利数</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val" id="totalRate">—</div>
+      <div class="metric-lbl">全体勝率</div>
+    </div>
+  </div>
+
+  <div class="section-label">デッキを追加</div>
+  <div class="add-row">
+    <input type="text" id="deckInput" placeholder="デッキ名（例：ロイヤル先攻）" maxlength="30" />
+    <button class="primary" onclick="addDeck()">追加</button>
+  </div>
+
+  <div class="section-label">デッキ一覧</div>
+  <div id="deckList"></div>
+</main>
+
+<script>
+const CLASSES = ["エルフ","ロイヤル","ウィッチ","ドラゴン","ネクロマンサー","ヴァンパイア","ビショップ","ネメシス","不明"];
+const STORAGE_KEY = 'sv_tracker_v1';
+
+let decks = [];
+let openTab = {};
+let deferredPrompt = null;
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) decks = JSON.parse(raw);
+  } catch(e) { decks = []; }
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+}
+
+function addDeck() {
+  const input = document.getElementById('deckInput');
+  const name = input.value.trim();
+  if (!name) return;
+  if (decks.find(d => d.name === name)) { alert('同名のデッキがすでに存在します'); return; }
+  decks.push({ id: Date.now(), name, wins: 0, losses: 0, history: [] });
+  input.value = '';
+  save(); render();
+}
+
+function record(id, result) {
+  const deck = decks.find(d => d.id === id);
+  if (!deck) return;
+  const cls = document.getElementById('cls-' + id).value;
+  if (result === 'win') deck.wins++; else deck.losses++;
+  deck.history.unshift({
+    result, cls,
+    date: new Date().toLocaleDateString('ja-JP', {month:'numeric', day:'numeric'}),
+    time: new Date().toLocaleTimeString('ja-JP', {hour:'2-digit', minute:'2-digit'})
+  });
+  save(); render();
+}
+
+function deleteDeck(id) {
+  if (!confirm('このデッキの戦績をすべて削除しますか？')) return;
+  decks = decks.filter(d => d.id !== id);
+  delete openTab[id];
+  save(); render();
+}
+
+function winRate(w, l) {
+  return (w + l) === 0 ? null : Math.round(w / (w + l) * 100);
+}
+
+function setTab(id, tab) {
+  openTab[id] = openTab[id] === tab ? null : tab;
+  render();
+}
+
+function classStats(deck) {
+  const map = {};
+  for (const h of deck.history) {
+    if (!map[h.cls]) map[h.cls] = { w: 0, l: 0 };
+    if (h.result === 'win') map[h.cls].w++; else map[h.cls].l++;
+  }
+  return CLASSES.filter(c => map[c]).map(c => ({ cls: c, ...map[c] }));
+}
+
+function updateOverall() {
+  const w = decks.reduce((s,d) => s + d.wins, 0);
+  const l = decks.reduce((s,d) => s + d.losses, 0);
+  document.getElementById('totalGames').textContent = w + l;
+  document.getElementById('totalWins').textContent = w;
+  const r = winRate(w, l);
+  document.getElementById('totalRate').textContent = r !== null ? r + '%' : '—';
+}
+
+function render() {
+  updateOverall();
+  const list = document.getElementById('deckList');
+  if (decks.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🃏</div><div>デッキを追加して戦績を記録しよう</div></div>`;
+    return;
+  }
+  const opts = CLASSES.map(c => `<option value="${c}">${c}</option>`).join('');
+  list.innerHTML = decks.map(deck => {
+    const total = deck.wins + deck.losses;
+    const rate = winRate(deck.wins, deck.losses);
+    const barW = rate !== null ? rate : 0;
+    const tab = openTab[deck.id] || null;
+    const cs = classStats(deck);
+    const classHtml = cs.length === 0
+      ? '<div class="no-data">対戦記録がまだありません</div>'
+      : `<table>
+          <thead><tr><th>相手クラス</th><th>勝</th><th>負</th><th>合計</th><th>勝率</th></tr></thead>
+          <tbody>${cs.map(({ cls, w, l }) => {
+            const r = winRate(w, l);
+            return `<tr>
+              <td>${cls}</td>
+              <td style="color:var(--green);font-weight:600">${w}</td>
+              <td style="color:var(--red);font-weight:600">${l}</td>
+              <td style="color:var(--text2)">${w+l}</td>
+              <td><div class="rate-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${r}%"></div></div><span class="rate-val">${r}%</span></div></td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table>`;
+    const histHtml = deck.history.length === 0
+      ? '<div class="no-data">対戦記録がまだありません</div>'
+      : deck.history.slice(0, 20).map(h =>
+          `<div class="hist-item">
+            <span class="badge ${h.result==='win'?'badge-win':'badge-loss'}">${h.result==='win'?'勝':'負'}</span>
+            <span>${h.cls}</span>
+            <span class="hist-time">${h.date} ${h.time}</span>
+          </div>`
+        ).join('');
+    const tabContent = tab === 'class'
+      ? `<div class="tab-content">${classHtml}</div>`
+      : tab === 'history'
+      ? `<div class="tab-content">${histHtml}</div>`
+      : '';
+    return `<div class="deck-card">
+      <div class="deck-header">
+        <div class="deck-name">${deck.name}</div>
+        <button class="btn-del" onclick="deleteDeck(${deck.id})">✕</button>
+      </div>
+      <div class="deck-nums">
+        <div class="stat">
+          <div class="stat-num" style="color:var(--green)">${deck.wins}</div>
+          <div class="stat-lbl">勝利</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" style="color:var(--red)">${deck.losses}</div>
+          <div class="stat-lbl">敗北</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">${total}</div>
+          <div class="stat-lbl">合計</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">${rate !== null ? rate + '%' : '—'}</div>
+          <div class="stat-lbl">勝率</div>
+        </div>
+      </div>
+      <div class="win-bar-wrap"><div class="win-bar" style="width:${barW}%"></div></div>
+      <div class="record-area">
+        <select id="cls-${deck.id}">${opts}</select>
+        <span class="record-label">相手クラス</span>
+        <button class="btn-win" onclick="record(${deck.id},'win')">勝ち ✓</button>
+        <button class="btn-loss" onclick="record(${deck.id},'loss')">負け ✗</button>
+      </div>
+      <div class="tabs">
+        <button class="tab ${tab==='class'?'active':''}" onclick="setTab(${deck.id},'class')">クラス別勝率</button>
+        <button class="tab ${tab==='history'?'active':''}" onclick="setTab(${deck.id},'history')">履歴</button>
+      </div>
+      ${tabContent}
+    </div>`;
+  }).join('');
+}
+
+document.getElementById('deckInput').addEventListener('keydown', e => { if (e.key === 'Enter') addDeck(); });
+
+// PWA install prompt
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBanner').style.display = 'flex';
+});
+
+document.getElementById('installBtn').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') document.getElementById('installBanner').style.display = 'none';
+  deferredPrompt = null;
+});
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('installBanner').style.display = 'none';
+});
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js');
+  });
+}
+
+load();
+render();
+</script>
+</body>
+</html>
