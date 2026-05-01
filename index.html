@@ -19,6 +19,13 @@
     --red-light: #FAECE7;
     --red-mid: #F0997B;
     --red-dark: #993C1D;
+    --blue: #2563EB;
+    --blue-light: #EFF6FF;
+    --blue-mid: #93C5FD;
+    --blue-dark: #1D4ED8;
+    --orange: #D97706;
+    --orange-light: #FFFBEB;
+    --orange-mid: #FCD34D;
     --bg: #f5f4f0;
     --surface: #ffffff;
     --surface2: #f0efe9;
@@ -32,151 +39,123 @@
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #181816;
-      --surface: #242422;
-      --surface2: #2e2e2b;
-      --border: rgba(255,255,255,0.1);
-      --border2: rgba(255,255,255,0.18);
-      --text: #f0efe9;
-      --text2: #9b9b97;
-      --text3: #6b6b67;
+      --bg: #181816; --surface: #242422; --surface2: #2e2e2b;
+      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.18);
+      --text: #f0efe9; --text2: #9b9b97; --text3: #6b6b67;
+      --blue-light: #1e3a5f; --orange-light: #3a2a00;
     }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding-bottom: 3rem;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; padding-bottom: 3rem;
   }
   header {
-    background: var(--surface);
-    border-bottom: 0.5px solid var(--border);
-    padding: 1rem 1.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    background: var(--surface); border-bottom: 0.5px solid var(--border);
+    padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 10;
   }
-  .header-inner {
-    max-width: 680px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .header-inner { max-width: 680px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
   .logo {
     width: 32px; height: 32px;
     background: linear-gradient(135deg, #1D9E75, #0F6E56);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
     font-size: 18px; flex-shrink: 0;
   }
   .header-title { font-size: 16px; font-weight: 600; }
   .header-sub { font-size: 12px; color: var(--text2); margin-top: 1px; }
-  main {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 1.5rem 1rem;
-  }
-  .overall-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 1.5rem;
-  }
+  main { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem; }
+  .overall-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; }
   .metric {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.875rem 1rem;
-    text-align: center;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm); padding: 0.875rem 1rem; text-align: center;
   }
   .metric-val { font-size: 24px; font-weight: 600; }
   .metric-lbl { font-size: 11px; color: var(--text2); margin-top: 3px; }
   .section-label {
-    font-size: 11px;
-    color: var(--text2);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    margin-top: 1.5rem;
+    font-size: 11px; color: var(--text2); letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 8px; margin-top: 1.5rem;
   }
   .add-row { display: flex; gap: 8px; margin-bottom: 1.5rem; }
   input[type="text"] {
-    flex: 1;
-    background: var(--surface);
-    border: 0.5px solid var(--border2);
-    border-radius: var(--radius-sm);
-    padding: 0 14px;
-    height: 40px;
-    font-size: 14px;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-    font-family: inherit;
+    flex: 1; background: var(--surface); border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 0 14px; height: 40px;
+    font-size: 14px; color: var(--text); outline: none;
+    transition: border-color 0.15s; font-family: inherit;
   }
   input[type="text"]:focus { border-color: var(--green-mid); }
   input[type="text"]::placeholder { color: var(--text3); }
   select {
-    background: var(--surface);
-    border: 0.5px solid var(--border2);
-    border-radius: var(--radius-sm);
-    padding: 0 28px 0 10px;
-    height: 38px;
-    font-size: 13px;
-    color: var(--text);
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
+    background: var(--surface); border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 0 28px 0 10px; height: 38px;
+    font-size: 13px; color: var(--text); outline: none; cursor: pointer;
+    appearance: none; -webkit-appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239b9b97' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    font-family: inherit;
+    background-repeat: no-repeat; background-position: right 10px center; font-family: inherit;
   }
   button.primary {
-    background: var(--green);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 0 18px;
-    height: 40px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.15s;
-    font-family: inherit;
+    background: var(--green); color: white; border: none;
+    border-radius: var(--radius-sm); padding: 0 18px; height: 40px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; transition: background 0.15s; font-family: inherit;
   }
   button.primary:hover { background: var(--green-dark); }
   button.primary:active { transform: scale(0.98); }
+
+  /* 先攻・後攻トグル */
+  .turn-toggle {
+    display: flex; gap: 0; border-radius: var(--radius-sm);
+    overflow: hidden; border: 0.5px solid var(--border2);
+  }
+  .turn-btn {
+    flex: 1; background: var(--surface); border: none;
+    padding: 7px 14px; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: inherit; color: var(--text2);
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .turn-btn:first-child { border-right: 0.5px solid var(--border2); }
+  .turn-btn.active-first {
+    background: var(--blue-light); color: var(--blue);
+  }
+  .turn-btn.active-second {
+    background: var(--orange-light); color: var(--orange);
+  }
+
   .deck-card {
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    margin-bottom: 10px;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 10px;
   }
-  .deck-header {
-    display: flex; align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
+  .deck-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
   .deck-name { font-weight: 600; font-size: 15px; }
   .btn-del {
-    background: none; border: none;
-    color: var(--text3); font-size: 16px;
-    cursor: pointer; padding: 4px 6px;
-    border-radius: var(--radius-sm);
-    line-height: 1;
-    transition: color 0.15s, background 0.15s;
-    font-family: inherit;
+    background: none; border: none; color: var(--text3); font-size: 16px;
+    cursor: pointer; padding: 4px 6px; border-radius: var(--radius-sm);
+    line-height: 1; transition: color 0.15s, background 0.15s; font-family: inherit;
   }
   .btn-del:hover { background: var(--red-light); color: var(--red); }
-  .deck-nums { display: flex; gap: 20px; align-items: center; margin-bottom: 8px; }
-  .stat-num { font-size: 22px; font-weight: 600; }
+  .deck-nums { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .stat-num { font-size: 20px; font-weight: 600; }
   .stat-lbl { font-size: 11px; color: var(--text2); }
+  .stat-divider { width: 0.5px; height: 32px; background: var(--border2); }
+
+  /* 先攻・後攻ミニ統計 */
+  .turn-stats { display: flex; gap: 8px; margin-bottom: 8px; }
+  .turn-stat {
+    flex: 1; border-radius: var(--radius-sm); padding: 7px 10px;
+    font-size: 12px;
+  }
+  .turn-stat.first { background: var(--blue-light); }
+  .turn-stat.second { background: var(--orange-light); }
+  .turn-stat-label { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
+  .turn-stat.first .turn-stat-label { color: var(--blue); }
+  .turn-stat.second .turn-stat-label { color: var(--orange); }
+  .turn-stat-nums { display: flex; gap: 8px; align-items: baseline; }
+  .turn-stat-rate { font-size: 16px; font-weight: 700; }
+  .turn-stat.first .turn-stat-rate { color: var(--blue); }
+  .turn-stat.second .turn-stat-rate { color: var(--orange); }
+  .turn-stat-detail { font-size: 11px; color: var(--text2); }
+
   .win-bar-wrap {
     height: 6px; background: var(--surface2);
     border-radius: 999px; overflow: hidden; margin-bottom: 12px;
@@ -193,8 +172,7 @@
   .record-label { font-size: 12px; color: var(--text2); white-space: nowrap; }
   .btn-win {
     background: var(--green-light); color: var(--green-dark);
-    border: 0.5px solid var(--green-mid);
-    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--green-mid); border-radius: var(--radius-sm);
     padding: 7px 16px; font-size: 13px; font-weight: 600;
     cursor: pointer; transition: background 0.15s; font-family: inherit;
   }
@@ -202,85 +180,97 @@
   .btn-win:active { transform: scale(0.97); }
   .btn-loss {
     background: var(--red-light); color: var(--red-dark);
-    border: 0.5px solid var(--red-mid);
-    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--red-mid); border-radius: var(--radius-sm);
     padding: 7px 16px; font-size: 13px; font-weight: 600;
     cursor: pointer; transition: background 0.15s; font-family: inherit;
   }
   .btn-loss:hover { background: #F5C4B3; }
   .btn-loss:active { transform: scale(0.97); }
-  .tabs {
-    display: flex; margin-top: 12px;
-    border-bottom: 0.5px solid var(--border);
-  }
+  .tabs { display: flex; margin-top: 12px; border-bottom: 0.5px solid var(--border); }
   .tab {
-    background: none; border: none;
-    font-size: 13px; color: var(--text2);
-    cursor: pointer; padding: 7px 14px;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -0.5px;
-    transition: color 0.15s; font-family: inherit;
+    background: none; border: none; font-size: 13px; color: var(--text2);
+    cursor: pointer; padding: 7px 14px; border-bottom: 2px solid transparent;
+    margin-bottom: -0.5px; transition: color 0.15s; font-family: inherit;
   }
   .tab.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
   .tab-content { padding-top: 10px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th {
     text-align: left; color: var(--text2); font-weight: 400;
-    padding: 4px 6px 6px 0;
-    border-bottom: 0.5px solid var(--border);
+    padding: 4px 4px 6px 0; border-bottom: 0.5px solid var(--border);
     font-size: 11px; letter-spacing: 0.04em;
   }
   th:not(:first-child) { text-align: center; }
-  td { padding: 6px 6px 6px 0; border-bottom: 0.5px solid var(--border); }
+  td { padding: 6px 4px 6px 0; border-bottom: 0.5px solid var(--border); }
   td:not(:first-child) { text-align: center; }
   tr:last-child td { border-bottom: none; }
   .mini-bar-wrap {
-    width: 44px; height: 5px; background: var(--surface2);
-    border-radius: 999px; overflow: hidden;
-    display: inline-block; vertical-align: middle;
+    width: 36px; height: 5px; background: var(--surface2);
+    border-radius: 999px; overflow: hidden; display: inline-block; vertical-align: middle;
   }
   .mini-bar { height: 100%; border-radius: 999px; background: var(--green); }
-  .rate-cell { display: flex; align-items: center; justify-content: center; gap: 6px; }
-  .rate-val { font-weight: 600; min-width: 32px; text-align: right; font-size: 13px; }
+  .rate-cell { display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .rate-val { font-weight: 600; min-width: 30px; text-align: right; font-size: 12px; }
   .badge {
-    font-size: 11px; font-weight: 600;
-    padding: 2px 8px; border-radius: 999px; display: inline-block;
+    font-size: 11px; font-weight: 600; padding: 2px 8px;
+    border-radius: 999px; display: inline-block;
   }
   .badge-win { background: var(--green-light); color: var(--green-dark); }
   .badge-loss { background: var(--red-light); color: var(--red-dark); }
+  .badge-first { background: var(--blue-light); color: var(--blue); }
+  .badge-second { background: var(--orange-light); color: var(--orange); }
   .hist-item {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 6px;
     padding: 5px 0; border-bottom: 0.5px solid var(--border);
     font-size: 13px; color: var(--text2);
   }
   .hist-item:last-child { border-bottom: none; }
   .hist-time { margin-left: auto; font-size: 11px; color: var(--text3); white-space: nowrap; }
-  .empty-state {
-    text-align: center; padding: 3rem 1rem;
-    color: var(--text2); font-size: 14px;
-  }
+  .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 14px; }
   .empty-icon { font-size: 40px; margin-bottom: 1rem; }
   .no-data { font-size: 13px; color: var(--text2); padding: 8px 0; }
+  .class-mgmt {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+  }
+  .class-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; min-height: 28px; }
+  .class-tag {
+    display: flex; align-items: center; gap: 4px;
+    background: var(--surface2); border: 0.5px solid var(--border2);
+    border-radius: 999px; padding: 4px 10px 4px 12px;
+    font-size: 13px; color: var(--text);
+  }
+  .class-tag-del {
+    background: none; border: none; color: var(--text3); cursor: pointer;
+    font-size: 13px; padding: 0 0 0 2px; line-height: 1;
+    font-family: inherit; transition: color 0.15s;
+  }
+  .class-tag-del:hover { color: var(--red); }
+  .class-add-row { display: flex; gap: 8px; }
+  .class-add-row input { height: 36px; font-size: 13px; }
+  .btn-secondary {
+    background: var(--surface2); color: var(--text);
+    border: 0.5px solid var(--border2); border-radius: var(--radius-sm);
+    padding: 0 14px; height: 36px; font-size: 13px; font-weight: 600;
+    cursor: pointer; white-space: nowrap; transition: background 0.15s; font-family: inherit;
+  }
+  .btn-secondary:hover { background: var(--border); }
   .install-banner {
-    background: var(--green-light);
-    border: 0.5px solid var(--green-mid);
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    margin-bottom: 1.5rem;
+    background: var(--green-light); border: 0.5px solid var(--green-mid);
+    border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 1.5rem;
     display: flex; align-items: center; gap: 10px;
     font-size: 13px; color: var(--green-dark);
   }
   .install-banner button {
-    background: var(--green); color: white;
-    border: none; border-radius: 6px;
+    background: var(--green); color: white; border: none; border-radius: 6px;
     padding: 5px 12px; font-size: 12px; font-weight: 600;
-    cursor: pointer; white-space: nowrap; margin-left: auto;
-    font-family: inherit;
+    cursor: pointer; white-space: nowrap; margin-left: auto; font-family: inherit;
   }
   @media (max-width: 480px) {
     .record-area { gap: 6px; }
     .btn-win, .btn-loss { padding: 7px 12px; }
-    .deck-nums { gap: 14px; }
+    .deck-nums { gap: 12px; }
+    .turn-btn { padding: 7px 10px; font-size: 12px; }
   }
 </style>
 </head>
@@ -290,7 +280,7 @@
     <div class="logo">⚔️</div>
     <div>
       <div class="header-title">シャドウバース 戦績トラッカー</div>
-      <div class="header-sub">デッキ別・クラス別の勝率を管理</div>
+      <div class="header-sub">デッキ別・クラス別・先後攻の勝率を管理</div>
     </div>
   </div>
 </header>
@@ -316,9 +306,18 @@
     </div>
   </div>
 
+  <div class="section-label">相手クラスの管理</div>
+  <div class="class-mgmt">
+    <div class="class-tags" id="classTags"></div>
+    <div class="class-add-row">
+      <input type="text" id="classInput" placeholder="クラス名を入力（例：ネメシス）" maxlength="20" />
+      <button class="btn-secondary" onclick="addClass()">＋ 追加</button>
+    </div>
+  </div>
+
   <div class="section-label">デッキを追加</div>
   <div class="add-row">
-    <input type="text" id="deckInput" placeholder="デッキ名（例：ロイヤル先攻）" maxlength="30" />
+    <input type="text" id="deckInput" placeholder="デッキ名（例：ロイヤル）" maxlength="30" />
     <button class="primary" onclick="addDeck()">追加</button>
   </div>
 
@@ -327,22 +326,41 @@
 </main>
 
 <script>
-const CLASSES = ["エルフ","ロイヤル","ウィッチ","ドラゴン","ネクロマンサー","ヴァンパイア","ビショップ","ネメシス","不明"];
+const DEFAULT_CLASSES = ["エルフ","ロイヤル","ウィッチ","ドラゴン","ナイトメア","ビショップ","ネメシス"];
 const STORAGE_KEY = 'sv_tracker_v1';
+const CLASS_KEY = 'sv_classes_v1';
+const TURN_KEY = 'sv_turn_v1'; // 先攻/後攻の選択状態
 
 let decks = [];
+let classes = [];
 let openTab = {};
+let selectedTurn = {}; // deckId -> 'first' | 'second'
 let deferredPrompt = null;
 
 function load() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) decks = JSON.parse(raw);
-  } catch(e) { decks = []; }
+  try { const r = localStorage.getItem(STORAGE_KEY); if (r) decks = JSON.parse(r); } catch(e) { decks = []; }
+  try { const r = localStorage.getItem(CLASS_KEY); classes = r ? JSON.parse(r) : [...DEFAULT_CLASSES]; } catch(e) { classes = [...DEFAULT_CLASSES]; }
 }
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+  localStorage.setItem(CLASS_KEY, JSON.stringify(classes));
+}
+
+function addClass() {
+  const input = document.getElementById('classInput');
+  const name = input.value.trim();
+  if (!name) return;
+  if (classes.includes(name)) { alert('同名のクラスがすでにあります'); return; }
+  classes.push(name);
+  input.value = '';
+  save(); renderClasses(); renderDecks();
+}
+
+function deleteClass(name) {
+  if (!confirm(`「${name}」を削除しますか？\n※このクラスの対戦履歴は記録に残ります`)) return;
+  classes = classes.filter(c => c !== name);
+  save(); renderClasses(); renderDecks();
 }
 
 function addDeck() {
@@ -352,27 +370,41 @@ function addDeck() {
   if (decks.find(d => d.name === name)) { alert('同名のデッキがすでに存在します'); return; }
   decks.push({ id: Date.now(), name, wins: 0, losses: 0, history: [] });
   input.value = '';
-  save(); render();
+  save(); renderDecks();
+}
+
+function setTurn(id, turn) {
+  selectedTurn[id] = turn;
+  // ボタンの見た目だけ更新（rerenderは重いので部分更新）
+  const fb = document.getElementById('turn-first-' + id);
+  const sb = document.getElementById('turn-second-' + id);
+  if (fb && sb) {
+    fb.className = 'turn-btn' + (turn === 'first' ? ' active-first' : '');
+    sb.className = 'turn-btn' + (turn === 'second' ? ' active-second' : '');
+  }
 }
 
 function record(id, result) {
   const deck = decks.find(d => d.id === id);
   if (!deck) return;
   const cls = document.getElementById('cls-' + id).value;
+  const turn = selectedTurn[id] || null;
+  if (!turn) { alert('先攻 / 後攻を選択してください'); return; }
   if (result === 'win') deck.wins++; else deck.losses++;
   deck.history.unshift({
-    result, cls,
+    result, cls, turn,
     date: new Date().toLocaleDateString('ja-JP', {month:'numeric', day:'numeric'}),
     time: new Date().toLocaleTimeString('ja-JP', {hour:'2-digit', minute:'2-digit'})
   });
-  save(); render();
+  save(); renderDecks();
 }
 
 function deleteDeck(id) {
   if (!confirm('このデッキの戦績をすべて削除しますか？')) return;
   decks = decks.filter(d => d.id !== id);
   delete openTab[id];
-  save(); render();
+  delete selectedTurn[id];
+  save(); renderDecks();
 }
 
 function winRate(w, l) {
@@ -381,16 +413,28 @@ function winRate(w, l) {
 
 function setTab(id, tab) {
   openTab[id] = openTab[id] === tab ? null : tab;
-  render();
+  renderDecks();
+}
+
+function turnStats(deck) {
+  let fw = 0, fl = 0, sw = 0, sl = 0;
+  for (const h of deck.history) {
+    if (h.turn === 'first') { if (h.result === 'win') fw++; else fl++; }
+    else if (h.turn === 'second') { if (h.result === 'win') sw++; else sl++; }
+  }
+  return { fw, fl, sw, sl };
 }
 
 function classStats(deck) {
   const map = {};
   for (const h of deck.history) {
-    if (!map[h.cls]) map[h.cls] = { w: 0, l: 0 };
+    if (!map[h.cls]) map[h.cls] = { w: 0, l: 0, fw: 0, fl: 0, sw: 0, sl: 0 };
     if (h.result === 'win') map[h.cls].w++; else map[h.cls].l++;
+    if (h.turn === 'first') { if (h.result === 'win') map[h.cls].fw++; else map[h.cls].fl++; }
+    else if (h.turn === 'second') { if (h.result === 'win') map[h.cls].sw++; else map[h.cls].sl++; }
   }
-  return CLASSES.filter(c => map[c]).map(c => ({ cls: c, ...map[c] }));
+  const allCls = [...new Set([...classes, ...Object.keys(map)])];
+  return allCls.filter(c => map[c]).map(c => ({ cls: c, ...map[c] }));
 }
 
 function updateOverall() {
@@ -402,76 +446,113 @@ function updateOverall() {
   document.getElementById('totalRate').textContent = r !== null ? r + '%' : '—';
 }
 
-function render() {
+function renderClasses() {
+  const tags = document.getElementById('classTags');
+  if (classes.length === 0) {
+    tags.innerHTML = '<span style="font-size:13px;color:var(--text3)">クラスを追加してください</span>';
+    return;
+  }
+  tags.innerHTML = classes.map(c =>
+    `<div class="class-tag">${c}<button class="class-tag-del" onclick="deleteClass('${c}')">✕</button></div>`
+  ).join('');
+}
+
+function renderDecks() {
   updateOverall();
   const list = document.getElementById('deckList');
   if (decks.length === 0) {
     list.innerHTML = `<div class="empty-state"><div class="empty-icon">🃏</div><div>デッキを追加して戦績を記録しよう</div></div>`;
     return;
   }
-  const opts = CLASSES.map(c => `<option value="${c}">${c}</option>`).join('');
+  const opts = classes.length > 0
+    ? classes.map(c => `<option value="${c}">${c}</option>`).join('')
+    : '<option value="－">－</option>';
+
   list.innerHTML = decks.map(deck => {
     const total = deck.wins + deck.losses;
     const rate = winRate(deck.wins, deck.losses);
     const barW = rate !== null ? rate : 0;
     const tab = openTab[deck.id] || null;
+    const turn = selectedTurn[deck.id] || null;
+    const ts = turnStats(deck);
+    const frRate = winRate(ts.fw, ts.fl);
+    const srRate = winRate(ts.sw, ts.sl);
     const cs = classStats(deck);
+
+    // 先攻・後攻ミニ統計
+    const turnStatsHtml = (ts.fw + ts.fl + ts.sw + ts.sl > 0) ? `
+      <div class="turn-stats">
+        <div class="turn-stat first">
+          <div class="turn-stat-label">🔵 先攻</div>
+          <div class="turn-stat-nums">
+            <span class="turn-stat-rate">${frRate !== null ? frRate + '%' : '—'}</span>
+            <span class="turn-stat-detail">${ts.fw}勝 ${ts.fl}敗 / ${ts.fw+ts.fl}試合</span>
+          </div>
+        </div>
+        <div class="turn-stat second">
+          <div class="turn-stat-label">🟠 後攻</div>
+          <div class="turn-stat-nums">
+            <span class="turn-stat-rate">${srRate !== null ? srRate + '%' : '—'}</span>
+            <span class="turn-stat-detail">${ts.sw}勝 ${ts.sl}敗 / ${ts.sw+ts.sl}試合</span>
+          </div>
+        </div>
+      </div>` : '';
+
+    // クラス別勝率テーブル（先攻・後攻列あり）
     const classHtml = cs.length === 0
       ? '<div class="no-data">対戦記録がまだありません</div>'
       : `<table>
-          <thead><tr><th>相手クラス</th><th>勝</th><th>負</th><th>合計</th><th>勝率</th></tr></thead>
-          <tbody>${cs.map(({ cls, w, l }) => {
+          <thead><tr><th>相手クラス</th><th>勝率</th><th>🔵先攻</th><th>🟠後攻</th><th>合計</th></tr></thead>
+          <tbody>${cs.map(({ cls, w, l, fw, fl, sw, sl }) => {
             const r = winRate(w, l);
+            const fr = winRate(fw, fl);
+            const sr = winRate(sw, sl);
             return `<tr>
               <td>${cls}</td>
-              <td style="color:var(--green);font-weight:600">${w}</td>
-              <td style="color:var(--red);font-weight:600">${l}</td>
+              <td><div class="rate-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${r??0}%"></div></div><span class="rate-val">${r !== null ? r+'%' : '—'}</span></div></td>
+              <td style="color:var(--blue);font-weight:600">${fr !== null ? fr+'%' : '—'}</td>
+              <td style="color:var(--orange);font-weight:600">${sr !== null ? sr+'%' : '—'}</td>
               <td style="color:var(--text2)">${w+l}</td>
-              <td><div class="rate-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${r}%"></div></div><span class="rate-val">${r}%</span></div></td>
             </tr>`;
           }).join('')}</tbody>
         </table>`;
+
     const histHtml = deck.history.length === 0
       ? '<div class="no-data">対戦記録がまだありません</div>'
       : deck.history.slice(0, 20).map(h =>
           `<div class="hist-item">
             <span class="badge ${h.result==='win'?'badge-win':'badge-loss'}">${h.result==='win'?'勝':'負'}</span>
+            <span class="badge ${h.turn==='first'?'badge-first':'badge-second'}">${h.turn==='first'?'先攻':'後攻'}</span>
             <span>${h.cls}</span>
             <span class="hist-time">${h.date} ${h.time}</span>
           </div>`
         ).join('');
+
     const tabContent = tab === 'class'
       ? `<div class="tab-content">${classHtml}</div>`
       : tab === 'history'
       ? `<div class="tab-content">${histHtml}</div>`
       : '';
+
     return `<div class="deck-card">
       <div class="deck-header">
         <div class="deck-name">${deck.name}</div>
         <button class="btn-del" onclick="deleteDeck(${deck.id})">✕</button>
       </div>
       <div class="deck-nums">
-        <div class="stat">
-          <div class="stat-num" style="color:var(--green)">${deck.wins}</div>
-          <div class="stat-lbl">勝利</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" style="color:var(--red)">${deck.losses}</div>
-          <div class="stat-lbl">敗北</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">${total}</div>
-          <div class="stat-lbl">合計</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">${rate !== null ? rate + '%' : '—'}</div>
-          <div class="stat-lbl">勝率</div>
-        </div>
+        <div class="stat"><div class="stat-num" style="color:var(--green)">${deck.wins}</div><div class="stat-lbl">勝利</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--red)">${deck.losses}</div><div class="stat-lbl">敗北</div></div>
+        <div class="stat"><div class="stat-num">${total}</div><div class="stat-lbl">合計</div></div>
+        <div class="stat"><div class="stat-num">${rate !== null ? rate + '%' : '—'}</div><div class="stat-lbl">総合勝率</div></div>
       </div>
       <div class="win-bar-wrap"><div class="win-bar" style="width:${barW}%"></div></div>
+      ${turnStatsHtml}
       <div class="record-area">
+        <div class="turn-toggle">
+          <button id="turn-first-${deck.id}" class="turn-btn${turn==='first'?' active-first':''}" onclick="setTurn(${deck.id},'first')">🔵 先攻</button>
+          <button id="turn-second-${deck.id}" class="turn-btn${turn==='second'?' active-second':''}" onclick="setTurn(${deck.id},'second')">🟠 後攻</button>
+        </div>
         <select id="cls-${deck.id}">${opts}</select>
-        <span class="record-label">相手クラス</span>
         <button class="btn-win" onclick="record(${deck.id},'win')">勝ち ✓</button>
         <button class="btn-loss" onclick="record(${deck.id},'loss')">負け ✗</button>
       </div>
@@ -485,14 +566,12 @@ function render() {
 }
 
 document.getElementById('deckInput').addEventListener('keydown', e => { if (e.key === 'Enter') addDeck(); });
+document.getElementById('classInput').addEventListener('keydown', e => { if (e.key === 'Enter') addClass(); });
 
-// PWA install prompt
 window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
+  e.preventDefault(); deferredPrompt = e;
   document.getElementById('installBanner').style.display = 'flex';
 });
-
 document.getElementById('installBtn').addEventListener('click', async () => {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
@@ -500,20 +579,16 @@ document.getElementById('installBtn').addEventListener('click', async () => {
   if (outcome === 'accepted') document.getElementById('installBanner').style.display = 'none';
   deferredPrompt = null;
 });
-
 window.addEventListener('appinstalled', () => {
   document.getElementById('installBanner').style.display = 'none';
 });
-
-// Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js');
-  });
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
 }
 
 load();
-render();
+renderClasses();
+renderDecks();
 </script>
 </body>
 </html>
